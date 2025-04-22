@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../../../../core/di/Dependency_Injection.dart';
 import '../../../../../../core/utils/app_theme.dart';
+import '../../../../../../core/utils/shared_preferences.dart';
 import '../../../../../../core/widgets/custom_text_form_filed.dart';
 import '../../register_cubit/register_cubit.dart';
 
@@ -23,6 +24,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           EasyLoading.show(status: 'loading...');
         }
         if (state is RegisterSuccess) {
+          SharedPreferencesUtils.saveData(key: "token", value: state.response.token);
           EasyLoading.showSuccess("User created successfully");
         }
         if (state is RegisterError) {

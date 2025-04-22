@@ -1,7 +1,9 @@
+import 'package:ecommerce_app/core/utils/shared_preferences.dart';
 import 'package:ecommerce_app/feature/auth/presentation/login/login_cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../../core/di/Dependency_Injection.dart';
 import '../../../../../../core/utils/app_theme.dart';
 import '../../../../../../core/widgets/custom_elevated_button.dart';
@@ -23,6 +25,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
       EasyLoading.show(status: 'loading...');
     }
     if (state is LoginSuccess) {
+      SharedPreferencesUtils.saveData(key: "token", value: state.response.token);
       EasyLoading.showSuccess("Login successfully");
     }
     if (state is LoginError) {

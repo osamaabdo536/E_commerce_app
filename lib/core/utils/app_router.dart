@@ -4,6 +4,8 @@ import 'package:ecommerce_app/feature/home/presentation/view/home_view.dart';
 import 'package:ecommerce_app/feature/splash_screen/presentation/views/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../feature/home/presentation/view/BottomNavigator.dart';
+
 abstract class AppRouter{
   static const splash = '/splashView';
   static const loginView = '/loginView';
@@ -26,7 +28,7 @@ abstract class AppRouter{
       ),
       GoRoute(
           path: "/",
-          builder: (context, state) =>  const HomeView()
+          builder: (context, state) =>  const MyHomePage()
       ),
     ],
   );

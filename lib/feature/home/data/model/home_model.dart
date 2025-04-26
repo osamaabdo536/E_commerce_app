@@ -1,9 +1,9 @@
-import 'package:ecommerce_app/feature/home/domain/entity/category_entity.dart';
+import 'package:ecommerce_app/feature/home/domain/entity/home_entity.dart';
 
-class CategoryModel extends CategoryEntity {
-  CategoryModel({super.results, this.metadata, super.data, super.message});
+class HomeModel extends HomeEntity {
+  HomeModel({super.results, this.metadata, super.data, super.message});
 
-  CategoryModel.fromJson(dynamic json) {
+  HomeModel.fromJson(dynamic json) {
     results = json['results'];
     message = json['message'];
     metadata =

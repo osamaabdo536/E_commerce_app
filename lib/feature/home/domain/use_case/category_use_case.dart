@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecommerce_app/feature/home/domain/repo/category_repo.dart';
+import 'package:ecommerce_app/feature/home/domain/repo/home_repo.dart';
 import '../../../../core/failure/failures.dart';
-import '../entity/category_entity.dart';
+import '../entity/home_entity.dart';
 
 class CategoryUseCase{
-  final CategoryRepo categoryRepo;
+  final HomeRepo categoryRepo;
   CategoryUseCase({required this.categoryRepo});
-  Future<Either<Failures, CategoryEntity>> invoke(){
+  Future<Either<Failures, HomeEntity>> invoke(){
     return categoryRepo.getAllCategories();
   }
 }

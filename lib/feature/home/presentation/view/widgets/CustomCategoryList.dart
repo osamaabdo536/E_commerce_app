@@ -1,8 +1,8 @@
-import 'package:ecommerce_app/feature/home/presentation/category_cubit/category_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/app_theme.dart';
+import '../../cubit/Home_cubit.dart';
 
 class CustomCategoryList extends StatefulWidget {
   const CustomCategoryList({super.key});
@@ -21,14 +21,14 @@ class _CustomCategoryListState extends State<CustomCategoryList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<CategoryCubit>(context).getAllCategories();
+    BlocProvider.of<HomeCubit>(context).getAllCategories();
   }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryCubit, CategoryState>(
+    return BlocBuilder<HomeCubit, HomeState>(
   builder: (context, state) {
-    if(state is CategorySuccess){
-     var data=state.categoryEntity.data;
+    if(state is HomeSuccess){
+     var data=BlocProvider.of<HomeCubit>(context).categoryDataList;
       return Container(
         height: 300,
         child: GridView.builder(

@@ -1,5 +1,5 @@
-class CategoryEntity {
-  CategoryEntity({this.results, this.data,this.message});
+class HomeEntity {
+  HomeEntity({this.results, this.data,this.message});
 
   int? results;
   String? message;

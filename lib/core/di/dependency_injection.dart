@@ -8,13 +8,14 @@ import 'package:ecommerce_app/feature/auth/domain/use_case/login_use_case.dart';
 import 'package:ecommerce_app/feature/auth/domain/use_case/register_use_case.dart';
 import 'package:ecommerce_app/feature/auth/presentation/login/login_cubit/login_cubit.dart';
 import 'package:ecommerce_app/feature/auth/presentation/register/register_cubit/register_cubit.dart';
-import 'package:ecommerce_app/feature/home/data/data_source/category_data_source.dart';
-import 'package:ecommerce_app/feature/home/data/repo/category_repo_impl.dart';
-import 'package:ecommerce_app/feature/home/domain/repo/category_repo.dart';
+import 'package:ecommerce_app/feature/home/data/data_source/home_data_source.dart';
+import 'package:ecommerce_app/feature/home/data/repo/home_repo_impl.dart';
+import 'package:ecommerce_app/feature/home/domain/repo/home_repo.dart';
 import 'package:ecommerce_app/feature/home/domain/use_case/category_use_case.dart';
-import 'package:ecommerce_app/feature/home/presentation/category_cubit/category_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../../feature/auth/domain/repo/register_repo.dart';
+import '../../feature/home/domain/use_case/brand_use_case.dart';
+import '../../feature/home/presentation/cubit/Home_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -49,16 +50,19 @@ void intl() {
   );
 
   //Category
-  sl.registerLazySingleton<CategoryDataSource>(
-        () => CategoryDataSourceImpl(apiService: sl<ApiService>()),
+  sl.registerLazySingleton<HomeDataSource>(
+        () => HomeDataSourceImpl(apiService: sl<ApiService>()),
   );
-  sl.registerLazySingleton<CategoryRepo>(
-        () => CategoryRepoImpl(dataSource: sl<CategoryDataSource>()),
+  sl.registerLazySingleton<HomeRepo>(
+        () => HomeRepoImpl(dataSource: sl<HomeDataSource>()),
   );
   sl.registerLazySingleton<CategoryUseCase>(
-        () => CategoryUseCase(categoryRepo: sl<CategoryRepo>()),
+        () => CategoryUseCase(categoryRepo: sl<HomeRepo>()),
   );
-  sl.registerLazySingleton<CategoryCubit>(
-        () => CategoryCubit(useCase: sl<CategoryUseCase>()),
+  sl.registerLazySingleton<BrandUseCase>(
+        () => BrandUseCase(homeRepo: sl<HomeRepo>()),
+  );
+  sl.registerLazySingleton<HomeCubit>(
+        () => HomeCubit(categoryUseCase: sl<CategoryUseCase>(), brandUseCase: sl()),
   );
 }

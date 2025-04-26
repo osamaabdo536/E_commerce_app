@@ -4,6 +4,7 @@ import 'package:ecommerce_app/feature/home/presentation/view/widgets/SearchBarCu
 import 'package:flutter/material.dart';
 
 import '../../../../../core/widgets/custom_text_form_filed.dart';
+import 'CustomBrandList.dart';
 import 'image_slider_widget.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -51,7 +52,7 @@ class HomeViewBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Home Appliance",
+                    "Brand Appliance",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: MyTheme.primaryColor
                     ),
@@ -59,6 +60,10 @@ class HomeViewBody extends StatelessWidget {
 
                 ],
               ),
+              Container(
+                  height: 200,
+                  child: CustomBrandList()),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
 
 
             ],

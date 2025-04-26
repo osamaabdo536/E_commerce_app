@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/failure/failures.dart';
 import 'package:ecommerce_app/feature/auth/data/model/request/login_request.dart';
 import 'package:ecommerce_app/feature/auth/data/model/response/login_response.dart';
-import 'package:ecommerce_app/feature/home/data/model/category_model.dart';
+import 'package:ecommerce_app/feature/home/data/model/home_model.dart';
 import 'package:http/http.dart' as http;
 import '../../feature/auth/data/model/request/register_request.dart';
 import '../../feature/auth/data/model/response/register_response.dart';
@@ -60,16 +60,28 @@ class ApiService {
     }
   }
 
-  Future<Either<Failures, CategoryModel>> getAllCategory() async {
+  Future<Either<Failures, HomeModel>> getAllCategory() async {
     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.categoriesApi);
     var response = await http.get(url);
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    var categoryResponse = CategoryModel.fromJson(json);
+    var categoryResponse = HomeModel.fromJson(json);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return Right(categoryResponse);
     } else {
       return Left(Failures(errorMessage: categoryResponse.message!));
+    }
+  }
+  Future<Either<Failures, HomeModel>> getAllBrand() async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.brandApi);
+    var response = await http.get(url);
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var brandResponse = HomeModel.fromJson(json);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(brandResponse);
+    } else {
+      return Left(Failures(errorMessage: brandResponse.message!));
     }
   }
 }

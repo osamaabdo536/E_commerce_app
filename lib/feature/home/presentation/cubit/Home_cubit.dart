@@ -25,6 +25,7 @@ class HomeCubit extends Cubit<HomeState> {
         emit(HomeError(errorMsg: failure.errorMessage!));
       },
       (response) {
+        print(response.data);
         categoryDataList = response.data ?? [];
       },
     );

@@ -12,6 +12,11 @@ import 'package:ecommerce_app/feature/home/data/data_source/home_data_source.dar
 import 'package:ecommerce_app/feature/home/data/repo/home_repo_impl.dart';
 import 'package:ecommerce_app/feature/home/domain/repo/home_repo.dart';
 import 'package:ecommerce_app/feature/home/domain/use_case/category_use_case.dart';
+import 'package:ecommerce_app/feature/product/data/data_source/add_to_cart_data_source.dart';
+import 'package:ecommerce_app/feature/product/data/repo/add_to_cart_repo_impl.dart';
+import 'package:ecommerce_app/feature/product/domain/repo/add_to_cart_repo.dart';
+import 'package:ecommerce_app/feature/product/domain/use_case/add_to_cart_use_case.dart';
+import 'package:ecommerce_app/feature/product/presentation/manger/add_to_cart_cubit/add_to_cart_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../../feature/auth/domain/repo/register_repo.dart';
 import '../../feature/home/domain/use_case/brand_use_case.dart';
@@ -51,18 +56,32 @@ void intl() {
 
   //Category
   sl.registerLazySingleton<HomeDataSource>(
-        () => HomeDataSourceImpl(apiService: sl<ApiService>()),
+    () => HomeDataSourceImpl(apiService: sl<ApiService>()),
   );
   sl.registerLazySingleton<HomeRepo>(
-        () => HomeRepoImpl(dataSource: sl<HomeDataSource>()),
+    () => HomeRepoImpl(dataSource: sl<HomeDataSource>()),
   );
   sl.registerLazySingleton<CategoryUseCase>(
-        () => CategoryUseCase(categoryRepo: sl<HomeRepo>()),
+    () => CategoryUseCase(categoryRepo: sl<HomeRepo>()),
   );
   sl.registerLazySingleton<BrandUseCase>(
-        () => BrandUseCase(homeRepo: sl<HomeRepo>()),
+    () => BrandUseCase(homeRepo: sl<HomeRepo>()),
   );
   sl.registerLazySingleton<HomeCubit>(
-        () => HomeCubit(categoryUseCase: sl<CategoryUseCase>(), brandUseCase: sl()),
+    () => HomeCubit(categoryUseCase: sl<CategoryUseCase>(), brandUseCase: sl()),
+  );
+
+  //AddToCart
+  sl.registerLazySingleton<AddToCartDataSource>(
+    () => AddToCartDataSourceImpl(apiService: sl<ApiService>()),
+  );
+  sl.registerLazySingleton<AddToCartRepo>(
+    () => AddToCartRepoImpl(dataSource: sl<AddToCartDataSource>()),
+  );
+  sl.registerLazySingleton<AddToCartUseCase>(
+    () => AddToCartUseCase(addToCartRepo: sl<AddToCartRepo>()),
+  );
+  sl.registerLazySingleton<AddToCartCubit>(
+    () => AddToCartCubit(addToCartUseCase: sl<AddToCartUseCase>()),
   );
 }

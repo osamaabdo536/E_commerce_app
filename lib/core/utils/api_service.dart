@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/failure/failures.dart';
+import 'package:ecommerce_app/core/utils/shared_preferences.dart';
 import 'package:ecommerce_app/feature/auth/data/model/request/login_request.dart';
 import 'package:ecommerce_app/feature/auth/data/model/response/login_response.dart';
 import 'package:ecommerce_app/feature/home/data/model/home_model.dart';
+import 'package:ecommerce_app/feature/product/data/model/AddToCartResponse.dart';
 import 'package:http/http.dart' as http;
 import '../../feature/auth/data/model/request/register_request.dart';
 import '../../feature/auth/data/model/response/register_response.dart';
@@ -72,6 +74,7 @@ class ApiService {
       return Left(Failures(errorMessage: categoryResponse.message!));
     }
   }
+
   Future<Either<Failures, HomeModel>> getAllBrand() async {
     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.brandApi);
     var response = await http.get(url);
@@ -82,6 +85,28 @@ class ApiService {
       return Right(brandResponse);
     } else {
       return Left(Failures(errorMessage: brandResponse.message!));
+    }
+  }
+
+  Future<Either<Failures, AddToCartResponse>> addToCart(
+    String productId,
+  ) async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToCartApi);
+    var token = SharedPreferencesUtils.getData(key: "token");
+    var response = await http.post(
+      url,
+      body: {"productId": productId},
+      headers: {"token": token.toString()},
+    );
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var addToCartResponse = AddToCartResponse.fromJson(json);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(addToCartResponse);
+    } else if (response.statusCode == 401) {
+      return Left(ServerError(errorMessage: addToCartResponse.message!));
+    } else {
+      return Left(Failures(errorMessage: addToCartResponse.message!));
     }
   }
 }

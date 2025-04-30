@@ -6,6 +6,7 @@ import 'package:ecommerce_app/feature/auth/data/model/request/login_request.dart
 import 'package:ecommerce_app/feature/auth/data/model/response/login_response.dart';
 import 'package:ecommerce_app/feature/home/data/model/home_model.dart';
 import 'package:ecommerce_app/feature/product/data/model/AddToCartResponse.dart';
+import 'package:ecommerce_app/feature/product/data/model/ProductsModel.dart';
 import 'package:http/http.dart' as http;
 import '../../feature/auth/data/model/request/register_request.dart';
 import '../../feature/auth/data/model/response/register_response.dart';
@@ -88,9 +89,7 @@ class ApiService {
     }
   }
 
-  Future<Either<Failures, AddToCartResponse>> addToCart(
-    String productId,
-  ) async {
+  Future<Either<Failures, AddToCartResponse>> addToCart(String productId,) async {
     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToCartApi);
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.post(
@@ -107,6 +106,20 @@ class ApiService {
       return Left(ServerError(errorMessage: addToCartResponse.message!));
     } else {
       return Left(Failures(errorMessage: addToCartResponse.message!));
+    }
+  }
+
+
+  Future<Either<Failures, ProductsModel>> getAllProducts() async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.ProductsApi);
+    var response = await http.get(url);
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var ProductsResponse = ProductsModel.fromJson(json);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(ProductsResponse);
+    } else {
+      return Left(Failures(errorMessage: "Check your Internet"));
     }
   }
 }

@@ -15,8 +15,10 @@ import 'package:ecommerce_app/feature/home/domain/use_case/category_use_case.dar
 import 'package:ecommerce_app/feature/product/data/data_source/add_to_cart_data_source.dart';
 import 'package:ecommerce_app/feature/product/data/repo/add_to_cart_repo_impl.dart';
 import 'package:ecommerce_app/feature/product/domain/repo/add_to_cart_repo.dart';
+import 'package:ecommerce_app/feature/product/domain/use_case/GetProducts.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/add_to_cart_use_case.dart';
 import 'package:ecommerce_app/feature/product/presentation/manger/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:ecommerce_app/feature/product/presentation/manger/product_cubit/product_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../../feature/auth/domain/repo/register_repo.dart';
 import '../../feature/home/domain/use_case/brand_use_case.dart';
@@ -81,7 +83,13 @@ void intl() {
   sl.registerLazySingleton<AddToCartUseCase>(
     () => AddToCartUseCase(addToCartRepo: sl<AddToCartRepo>()),
   );
+  sl.registerLazySingleton<GetProductsUseCase>(
+        () => GetProductsUseCase(addToCartRepo: sl<AddToCartRepo>()),
+  );
   sl.registerLazySingleton<AddToCartCubit>(
     () => AddToCartCubit(addToCartUseCase: sl<AddToCartUseCase>()),
+  );
+  sl.registerLazySingleton<ProductCubit>(
+        () => ProductCubit(  getProductsUseCase: sl<GetProductsUseCase>(),),
   );
 }

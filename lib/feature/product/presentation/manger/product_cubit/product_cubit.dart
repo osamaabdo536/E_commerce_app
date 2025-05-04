@@ -13,14 +13,16 @@ class ProductCubit extends Cubit<ProductState> {
   ProductCubit({required this.getProductsUseCase}) : super(ProductInitial());
   Future<void> getAllProducts() async {
     emit(ProductLoading());
+    EasyLoading.show(status: 'loading...');
     var either = await getProductsUseCase.invoke();
     either.fold(
           (failure) {
+        print(failure.errorMessage);
         EasyLoading.dismiss();
         emit(ProductError(errorMsg: failure.errorMessage!));
       },
           (response) {
-        print(response.data);
+            EasyLoading.dismiss();
         ProductDataList = response.data ?? [];
         emit(ProductSuccess());
       },

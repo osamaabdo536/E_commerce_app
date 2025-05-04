@@ -51,7 +51,7 @@ class Brand extends BrandEntity {
     name: json["name"],
     slug: json["slug"],
     image: json["image"],
-    category: categoryValues.map[json["category"]]!,
+    category: categoryValues.map[json["category"]],
   );
 
 

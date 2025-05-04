@@ -7,7 +7,7 @@ import '../repo/home_repo.dart';
 class BrandUseCase{
   final HomeRepo homeRepo;
   BrandUseCase({required this.homeRepo});
-  Future<Either<Failures, HomeEntity>> invoke(){
-    return homeRepo.getAllBrands();
+  Future<Either<Failures, HomeEntity>> invoke() async{
+    return await homeRepo.getAllBrands();
   }
 }

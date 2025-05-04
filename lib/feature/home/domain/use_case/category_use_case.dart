@@ -6,7 +6,7 @@ import '../entity/home_entity.dart';
 class CategoryUseCase{
   final HomeRepo categoryRepo;
   CategoryUseCase({required this.categoryRepo});
-  Future<Either<Failures, HomeEntity>> invoke(){
-    return categoryRepo.getAllCategories();
+  Future<Either<Failures, HomeEntity>> invoke() async{
+    return await categoryRepo.getAllCategories();
   }
 }

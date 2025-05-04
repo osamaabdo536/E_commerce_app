@@ -13,11 +13,7 @@ class CustomBrandList extends StatefulWidget {
 }
 
 class _CustomBrandListState extends State<CustomBrandList> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<HomeCubit>(context).getAllBrand();
-  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -17,11 +17,6 @@ class _CustomCategoryListState extends State<CustomCategoryList> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<HomeCubit>(context).getAllCategories();
-  }
 
   @override
   Widget build(BuildContext context) {

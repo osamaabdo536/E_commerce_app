@@ -15,18 +15,19 @@ class HomeCubit extends Cubit<HomeState> {
   List<DataEntity>? categoryDataList;
   List<DataEntity>? brandDataList;
   Future<void> getAllCategories() async {
-    if (!isClosed) emit(HomeLoading());
+ emit(HomeLoading());
 
     EasyLoading.show(status: 'loading...');
     var either = await categoryUseCase.invoke();
-    either.fold(
+    await either.fold (
       (failure) {
         EasyLoading.dismiss();
         emit(HomeError(errorMsg: failure.errorMessage!));
       },
-      (response) {
+      (response) async{
         print(response.data);
-        categoryDataList = response.data ?? [];
+        categoryDataList = response.data ;
+        await getAllBrand();
       },
     );
   }
@@ -39,7 +40,7 @@ class HomeCubit extends Cubit<HomeState> {
       },
           (response) {
         EasyLoading.dismiss();
-        brandDataList = response.data ?? [];
+        brandDataList = response.data ;
         emit(HomeSuccess());
       },
     );

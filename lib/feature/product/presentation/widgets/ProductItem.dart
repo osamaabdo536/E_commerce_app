@@ -37,7 +37,7 @@ class ProductItem extends StatelessWidget {
             children: [
               CustomImage(
                 data.imageCover!,
-                width: 300,
+                width: MediaQuery.sizeOf(context).width*300/360,
                 //height: 150,
                 radius: 15,
               ),

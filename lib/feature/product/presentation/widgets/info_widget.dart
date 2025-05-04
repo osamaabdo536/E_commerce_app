@@ -22,8 +22,8 @@ var data;
             fontWeight: FontWeight.bold
           )
         ),
-        const SizedBox(
-          height: 5,
+         SizedBox(
+          height: MediaQuery.sizeOf(context).height*5/776,
         ),
 
         Row(
@@ -42,8 +42,8 @@ var data;
             ),
           ],
         ),
-        const SizedBox(
-          height: 5,
+         SizedBox(
+           height: MediaQuery.sizeOf(context).height*5/776,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

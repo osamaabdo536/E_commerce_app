@@ -12,12 +12,14 @@ import 'package:ecommerce_app/feature/home/data/data_source/home_data_source.dar
 import 'package:ecommerce_app/feature/home/data/repo/home_repo_impl.dart';
 import 'package:ecommerce_app/feature/home/domain/repo/home_repo.dart';
 import 'package:ecommerce_app/feature/home/domain/use_case/category_use_case.dart';
-import 'package:ecommerce_app/feature/product/data/data_source/add_to_cart_data_source.dart';
-import 'package:ecommerce_app/feature/product/data/repo/add_to_cart_repo_impl.dart';
-import 'package:ecommerce_app/feature/product/domain/repo/add_to_cart_repo.dart';
+import 'package:ecommerce_app/feature/product/data/data_source/product_data_source.dart';
+import 'package:ecommerce_app/feature/product/data/repo/product_repo_impl.dart';
+import 'package:ecommerce_app/feature/product/domain/repo/product_repo.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/GetProducts.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/add_to_cart_use_case.dart';
-import 'package:ecommerce_app/feature/product/presentation/manger/add_to_cart_cubit/add_to_cart_cubit.dart';
+import 'package:ecommerce_app/feature/product/domain/use_case/add_to_favourite_use_case.dart';
+import 'package:ecommerce_app/feature/product/domain/use_case/delete_from_favourite_use_case.dart';
+import 'package:ecommerce_app/feature/product/domain/use_case/get_favourite.dart';
 import 'package:ecommerce_app/feature/product/presentation/manger/product_cubit/product_cubit.dart';
 import 'package:get_it/get_it.dart';
 import '../../feature/auth/domain/repo/register_repo.dart';
@@ -73,23 +75,36 @@ void intl() {
     () => HomeCubit(categoryUseCase: sl<CategoryUseCase>(), brandUseCase: sl()),
   );
 
-  //AddToCart
-  sl.registerLazySingleton<AddToCartDataSource>(
-    () => AddToCartDataSourceImpl(apiService: sl<ApiService>()),
+  //Product
+  sl.registerLazySingleton<ProductDataSource>(
+    () => ProductDataSourceImpl(apiService: sl<ApiService>()),
   );
-  sl.registerLazySingleton<AddToCartRepo>(
-    () => AddToCartRepoImpl(dataSource: sl<AddToCartDataSource>()),
+  sl.registerLazySingleton<ProductRepo>(
+    () => ProductRepoImpl(dataSource: sl<ProductDataSource>()),
   );
   sl.registerLazySingleton<AddToCartUseCase>(
-    () => AddToCartUseCase(addToCartRepo: sl<AddToCartRepo>()),
+    () => AddToCartUseCase(addToCartRepo: sl<ProductRepo>()),
   );
   sl.registerLazySingleton<GetProductsUseCase>(
-        () => GetProductsUseCase(addToCartRepo: sl<AddToCartRepo>()),
+    () => GetProductsUseCase(addToCartRepo: sl<ProductRepo>()),
   );
-  sl.registerLazySingleton<AddToCartCubit>(
-    () => AddToCartCubit(addToCartUseCase: sl<AddToCartUseCase>()),
+  sl.registerLazySingleton<GetFavouriteUseCase>(
+        () => GetFavouriteUseCase(getFavouriteRepo: sl<ProductRepo>()),
   );
+  sl.registerLazySingleton<AddToFavouriteUseCase>(
+    () => AddToFavouriteUseCase(favouriteRepo: sl<ProductRepo>()),
+  );
+  sl.registerLazySingleton<DeleteFromFavouriteUseCase>(
+        () => DeleteFromFavouriteUseCase(deleteFromFavouriteUseCase: sl<ProductRepo>()),
+  );
+
   sl.registerLazySingleton<ProductCubit>(
-        () => ProductCubit(  getProductsUseCase: sl<GetProductsUseCase>(),),
+    () => ProductCubit(
+      getProductsUseCase: sl<GetProductsUseCase>(),
+      addToFavouriteUseCase: sl<AddToFavouriteUseCase>(),
+      addToCartUseCase: sl<AddToCartUseCase>(),
+      getFavouriteUseCase: sl<GetFavouriteUseCase>(),
+      deleteFromFavouriteUseCase: sl<DeleteFromFavouriteUseCase>(),
+    ),
   );
 }

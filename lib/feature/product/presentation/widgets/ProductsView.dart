@@ -3,6 +3,7 @@ import 'package:ecommerce_app/feature/product/presentation/manger/product_cubit/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/Dependency_Injection.dart';
 import '../../../../core/utils/app_theme.dart';
 import '../../../home/presentation/view/widgets/SearchBarCustom.dart';
 import 'ProductItem.dart';
@@ -20,7 +21,7 @@ class _ProductsViewState extends State<ProductsView> {
     return BlocBuilder<ProductCubit, ProductState>(
       builder: (context, state) {
        if(state is ProductSuccess){
-         var data=BlocProvider.of<ProductCubit>(context).ProductDataList;
+         var data=BlocProvider.of<ProductCubit>(context).productDataList;
          return Padding(
            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
            child: Column(
@@ -42,7 +43,7 @@ class _ProductsViewState extends State<ProductsView> {
                      mainAxisSpacing: 10,
                      childAspectRatio: 0.8,
                    ),
-                   itemCount: data!.length,
+                   itemCount: data.length,
                    padding: const EdgeInsets.symmetric(horizontal: 5),
                    itemBuilder: (BuildContext context, int index) {
                      return ProductItem(data: data[index],);
@@ -55,7 +56,7 @@ class _ProductsViewState extends State<ProductsView> {
          );
        }
        else{
-         return Text("");
+         return Text('');
        }
       },
     );

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:ecommerce_app/core/utils/app_theme.dart';
+import 'package:ecommerce_app/feature/product/presentation/screens/favourite_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../product/presentation/screens/Products.dart';
@@ -19,7 +20,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final _pageController = PageController(initialPage: 0);
 
   /// Controller to handle bottom nav bar and also handles initial page
-  final NotchBottomBarController _controller = NotchBottomBarController(index: 0);
+  final NotchBottomBarController _controller = NotchBottomBarController(
+    index: 0,
+  );
 
   int maxCount = 5;
 
@@ -36,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final List<Widget> bottomBarPages = [
       HomeView(),
       Products(),
-      HomeView(),
+      FavouriteView(),
       HomeView(),
       HomeView(),
     ];
@@ -44,84 +47,74 @@ class _MyHomePageState extends State<MyHomePage> {
       body: PageView(
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: List.generate(bottomBarPages.length, (index) => bottomBarPages[index]),
+        children: List.generate(
+          bottomBarPages.length,
+          (index) => bottomBarPages[index],
+        ),
       ),
       extendBody: true,
-      bottomNavigationBar: (bottomBarPages.length <= maxCount)
-          ? AnimatedNotchBottomBar(
-        bottomBarHeight: 0,
-        circleMargin: 0,
-        /// Provide NotchBottomBarController
-        notchBottomBarController: _controller,
-        color: MyTheme.primaryColor,
-        textOverflow: TextOverflow.visible,
-        maxLine: 1,
-        kBottomRadius: 0,
+      bottomNavigationBar:
+          (bottomBarPages.length <= maxCount)
+              ? AnimatedNotchBottomBar(
+                bottomBarHeight: 0,
+                circleMargin: 0,
 
+                /// Provide NotchBottomBarController
+                notchBottomBarController: _controller,
+                color: MyTheme.primaryColor,
+                textOverflow: TextOverflow.visible,
+                maxLine: 1,
+                kBottomRadius: 0,
 
+                notchColor: Colors.white,
 
-        notchColor: Colors.white,
+                /// restart app if you change removeMargins
+                removeMargins: true,
+                bottomBarWidth: MediaQuery.sizeOf(context).width,
+                showShadow: true,
+                showBottomRadius: true,
+                durationInMilliSeconds: 300,
 
-        /// restart app if you change removeMargins
-        removeMargins: true,
-        bottomBarWidth: MediaQuery.sizeOf(context).width,
-        showShadow: true,
-        showBottomRadius: true,
-        durationInMilliSeconds: 300,
+                itemLabelStyle: const TextStyle(fontSize: 10),
 
-        itemLabelStyle: const TextStyle(fontSize: 10),
-
-        elevation: 1,
-        bottomBarItems: const [
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.home_filled,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.home_filled,
-              color: Colors.blueAccent,
-            ),
-
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(Icons.category_rounded, color: Colors.blueGrey),
-            activeItem: Icon(
-              Icons.category_rounded,
-              color: Colors.blueAccent,
-            ),
-
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.settings,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.settings,
-              color: Colors.pink,
-            ),
-
-          ),
-          BottomBarItem(
-            inActiveItem: Icon(
-              Icons.person,
-              color: Colors.blueGrey,
-            ),
-            activeItem: Icon(
-              Icons.person,
-              color: Colors.yellow,
-            ),
-
-          ),
-        ],
-        onTap: (index) {
-          log('current selected index $index');
-          _pageController.jumpToPage(index);
-        },
-        kIconSize: 4.0,
-      )
-          : null,
+                elevation: 1,
+                bottomBarItems: const [
+                  BottomBarItem(
+                    inActiveItem: Icon(
+                      Icons.home_filled,
+                      color: Colors.blueGrey,
+                    ),
+                    activeItem: Icon(
+                      Icons.home_filled,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  BottomBarItem(
+                    inActiveItem: Icon(
+                      Icons.category_rounded,
+                      color: Colors.blueGrey,
+                    ),
+                    activeItem: Icon(
+                      Icons.category_rounded,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  BottomBarItem(
+                    inActiveItem: Icon(Icons.settings, color: Colors.blueGrey),
+                    activeItem: Icon(Icons.settings, color: Colors.pink),
+                  ),
+                  BottomBarItem(
+                    inActiveItem: Icon(Icons.person, color: Colors.blueGrey),
+                    activeItem: Icon(Icons.person, color: Colors.yellow),
+                  ),
+                ],
+                onTap: (index) {
+                  log('current selected index $index');
+                  _pageController.jumpToPage(index);
+                },
+                kIconSize: 4.0,
+              )
+              : null,
     );
   }
 }

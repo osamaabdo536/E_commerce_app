@@ -14,3 +14,18 @@ final class ProductError extends ProductState {
 
   ProductError({required this.errorMsg});
 }
+final class DeleteOrAddToFavouriteSuccess extends ProductState {
+  final DeleteOrAddToFavouriteEntity addToFavouriteEntity;
+
+  DeleteOrAddToFavouriteSuccess({required this.addToFavouriteEntity});
+}
+final class AddToCartSuccess extends ProductState {
+  final AddToCartEntity addToCartEntity;
+
+  AddToCartSuccess({required this.addToCartEntity});
+}
+final class GetFavouriteSuccess extends ProductState {
+  final GetFavouriteEntity getFavouriteEntity;
+
+  GetFavouriteSuccess({required this.getFavouriteEntity});
+}

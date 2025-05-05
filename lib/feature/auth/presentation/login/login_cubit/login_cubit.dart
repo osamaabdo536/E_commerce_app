@@ -7,7 +7,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required this.loginUseCase}) : super(LoginInitial());
   var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController(text: 'osama@route.com');
+  var emailController = TextEditingController(text: 'Osamaaaaaaaa@gmail.com');
   var passwordController = TextEditingController(text: '123456');
   bool isObscure = true;
   final LoginUseCase loginUseCase;

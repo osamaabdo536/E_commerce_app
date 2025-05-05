@@ -2,11 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/feature/product/domain/entity/ProductsEntity.dart';
 
 import '../../../../core/failure/failures.dart';
-import '../entity/AddToCartEntity.dart';
-import '../repo/add_to_cart_repo.dart';
+import '../entity/add_to_cart_entity.dart';
+import '../repo/product_repo.dart';
 
 class GetProductsUseCase {
-  final AddToCartRepo addToCartRepo;
+  final ProductRepo addToCartRepo;
 
   GetProductsUseCase({required this.addToCartRepo});
   Future<Either<Failures, ProductsEntity>> invoke() {

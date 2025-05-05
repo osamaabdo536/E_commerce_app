@@ -7,6 +7,8 @@ import 'package:ecommerce_app/feature/auth/data/model/response/login_response.da
 import 'package:ecommerce_app/feature/home/data/model/home_model.dart';
 import 'package:ecommerce_app/feature/product/data/model/AddToCartResponse.dart';
 import 'package:ecommerce_app/feature/product/data/model/ProductsModel.dart';
+import 'package:ecommerce_app/feature/product/data/model/delete_or_add_to_favourite_response.dart';
+import 'package:ecommerce_app/feature/product/data/model/get_favourite_response.dart';
 import 'package:http/http.dart' as http;
 import '../../feature/auth/data/model/request/register_request.dart';
 import '../../feature/auth/data/model/response/register_response.dart';
@@ -89,7 +91,9 @@ class ApiService {
     }
   }
 
-  Future<Either<Failures, AddToCartResponse>> addToCart(String productId,) async {
+  Future<Either<Failures, AddToCartResponse>> addToCart(
+    String productId,
+  ) async {
     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToCartApi);
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.post(
@@ -109,17 +113,79 @@ class ApiService {
     }
   }
 
-
   Future<Either<Failures, ProductsModel>> getAllProducts() async {
-    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.ProductsApi);
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.productsApi);
     var response = await http.get(url);
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    var ProductsResponse = ProductsModel.fromJson(json);
+    var productsResponse = ProductsModel.fromJson(json);
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return Right(ProductsResponse);
+      return Right(productsResponse);
     } else {
       return Left(Failures(errorMessage: "Check your Internet"));
+    }
+  }
+
+  Future<Either<Failures, GetFavouriteResponse>> getFavourite() async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToFavouriteApi);
+    var token = SharedPreferencesUtils.getData(key: "token");
+    var response = await http.get(url, headers: {"token": token.toString()});
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var getFavouriteResponse = GetFavouriteResponse.fromJson(json);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(getFavouriteResponse);
+    } else if (response.statusCode == 401) {
+      return Left(ServerError(errorMessage: getFavouriteResponse.message!));
+    } else {
+      return Left(Failures(errorMessage: getFavouriteResponse.message!));
+    }
+  }
+
+  Future<Either<Failures, DeleteOrAddToFavouriteResponse>> addToFavourite(
+    String productId,
+  ) async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToFavouriteApi);
+    var token = SharedPreferencesUtils.getData(key: "token");
+    var response = await http.post(
+      url,
+      body: {"productId": productId},
+      headers: {"token": token.toString()},
+    );
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var addToFavouriteResponse = DeleteOrAddToFavouriteResponse.fromJson(json);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(addToFavouriteResponse);
+    } else if (response.statusCode == 401) {
+      return Left(ServerError(errorMessage: addToFavouriteResponse.message!));
+    } else {
+      return Left(Failures(errorMessage: addToFavouriteResponse.message!));
+    }
+  }
+
+  Future<Either<Failures, DeleteOrAddToFavouriteResponse>> deleteFromFavourite(
+    String productId,
+  ) async {
+    Uri url = Uri.https(
+      ApiConstants.baseUrl,
+      "${ApiConstants.addToFavouriteApi}productId",
+    );
+    var token = SharedPreferencesUtils.getData(key: "token");
+    var response = await http.delete(url, headers: {"token": token.toString()});
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var removeFromFavouriteResponse = DeleteOrAddToFavouriteResponse.fromJson(
+      json,
+    );
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(removeFromFavouriteResponse);
+    } else if (response.statusCode == 401) {
+      return Left(
+        ServerError(errorMessage: removeFromFavouriteResponse.message!),
+      );
+    } else {
+      return Left(Failures(errorMessage: removeFromFavouriteResponse.message!));
     }
   }
 }

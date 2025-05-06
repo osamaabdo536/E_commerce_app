@@ -15,7 +15,7 @@ class ProductsModel extends ProductsEntity {
 }
 
 class Datum extends DatumEntity {
-  Datum({required super.sold, required super.images, required super.subcategory, required super.ratingsQuantity, required super.id, required super.title, required super.slug, required super.description, required super.quantity, required super.price, required super.imageCover, required super.category, required super.brand, required super.ratingsAverage, required super.createdAt, required super.updatedAt, required super.datumId, required super.priceAfterDiscount, required  super.availableColors});
+  Datum({required super.sold, required super.images, required super.subcategory, required super.ratingsQuantity, required super.id, required super.title, required super.slug, required super.description, required super.quantity, required super.price, required super.imageCover, required super.category, required super.ratingsAverage, required super.createdAt, required super.updatedAt, required super.datumId, required super.priceAfterDiscount, required  super.availableColors});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     sold: json["sold"],
@@ -30,7 +30,7 @@ class Datum extends DatumEntity {
     price: json["price"],
     imageCover: json["imageCover"],
     category: Brand.fromJson(json["category"]),
-    brand: Brand.fromJson(json["brand"]),
+    //brand: Brand.fromJson(json["brand"]),
     ratingsAverage: json["ratingsAverage"]?.toDouble(),
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
@@ -46,13 +46,15 @@ class Brand extends BrandEntity {
   Brand({required super.id, required super.name, required super.slug, required super.image, required super.category });
 
 
-  factory Brand.fromJson(Map<String, dynamic> json) => Brand(
-    id: json["_id"],
-    name: json["name"],
-    slug: json["slug"],
-    image: json["image"],
-    category: categoryValues.map[json["category"]],
-  );
+  factory Brand.fromJson(Map<String, dynamic> json) {
+    return Brand(
+      id: json["_id"] ?? '',
+      name: json["name"] ?? '',
+      slug: json["slug"] ?? '',
+      image: json["image"] ?? '',
+      category: categoryValues.map?[json["category"]],
+    );
+  }
 
 
 
@@ -81,13 +83,9 @@ class Metadata extends MetadataEntity {
 }
 
 class EnumValues<T> {
-  Map<String, T> map;
+  Map<String, T>? map;
   late Map<T, String> reverseMap;
 
   EnumValues(this.map);
 
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

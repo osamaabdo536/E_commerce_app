@@ -45,17 +45,15 @@ class _CustomBrandListState extends State<CustomBrandList> {
                     ),
                     SizedBox(height: 8),
                     Center(
-                      child: Expanded(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          textWidthBasis: TextWidthBasis.longestLine,
-                          data[index].name!,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleSmall!.copyWith(
-                            color: MyTheme.primaryColor,
-                            fontSize: 14,
-                          ),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        textWidthBasis: TextWidthBasis.longestLine,
+                        data[index].name!,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall!.copyWith(
+                          color: MyTheme.primaryColor,
+                          fontSize: 14,
                         ),
                       ),
                     ),

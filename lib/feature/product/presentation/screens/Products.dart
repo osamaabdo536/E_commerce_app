@@ -10,12 +10,9 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<ProductCubit>()..getAllProducts(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: ProductsView(),
-      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ProductsView(),
     );
   }
 }

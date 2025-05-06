@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/feature/product/presentation/manger/product_cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/di/Dependency_Injection.dart';
 import '../../../../core/utils/app_theme.dart';
 import '../../../home/presentation/view/widgets/SearchBarCustom.dart';
 import 'favourite_item.dart';
@@ -13,6 +14,15 @@ class FavouriteViewBody extends StatefulWidget {
 }
 
 class _FavouriteViewBodyState extends State<FavouriteViewBody> {
+  late ProductCubit productCubit;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    productCubit=sl<ProductCubit>();
+    productCubit.getFavourite();
+    //ProductCubit.get(context).getFavourite();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +37,7 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
           ),
           SearchBarCustom(),
           BlocBuilder<ProductCubit, ProductState>(
+            bloc: productCubit,
             builder: (context, state) {
               if(state is GetFavouriteSuccess){
                 return Expanded(

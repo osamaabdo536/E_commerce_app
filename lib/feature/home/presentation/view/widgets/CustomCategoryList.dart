@@ -12,10 +12,7 @@ class CustomCategoryList extends StatefulWidget {
 }
 
 class _CustomCategoryListState extends State<CustomCategoryList> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
+
 
 
   @override
@@ -42,17 +39,15 @@ class _CustomCategoryListState extends State<CustomCategoryList> {
                     ),
                     SizedBox(height: 8),
                     Center(
-                      child: Expanded(
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          textWidthBasis: TextWidthBasis.longestLine,
-                          data[index].name!,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleSmall!.copyWith(
-                            color: MyTheme.primaryColor,
-                            fontSize: 14,
-                          ),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        textWidthBasis: TextWidthBasis.longestLine,
+                        data[index].name!,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleSmall!.copyWith(
+                          color: MyTheme.primaryColor,
+                          fontSize: 14,
                         ),
                       ),
                     ),

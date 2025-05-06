@@ -5,6 +5,7 @@ import 'package:ecommerce_app/feature/product/domain/use_case/GetProducts.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/add_to_cart_use_case.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/delete_from_favourite_use_case.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/get_favourite.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meta/meta.dart';
 
@@ -28,7 +29,7 @@ class ProductCubit extends Cubit<ProductState> {
     required this.getFavouriteUseCase,
     required this.deleteFromFavouriteUseCase,
   }) : super(ProductInitial());
-
+static ProductCubit get(context)=>BlocProvider.of<ProductCubit>(context);
   Future<void> getAllProducts() async {
     emit(ProductLoading());
     EasyLoading.show(status: 'loading...');

@@ -23,7 +23,7 @@ class DatumEntity {
   int? price;
   String? imageCover;
   BrandEntity? category;
-  BrandEntity? brand;
+  //BrandEntity? brand;
   double? ratingsAverage;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -44,7 +44,7 @@ class DatumEntity {
     this.price,
     this.imageCover,
     this.category,
-    this.brand,
+    //this.brand,
     this.ratingsAverage,
     this.createdAt,
     this.updatedAt,

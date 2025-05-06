@@ -16,12 +16,21 @@ class ProductsView extends StatefulWidget {
 }
 
 class _ProductsViewState extends State<ProductsView> {
+   ProductCubit productCubit=sl<ProductCubit>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    productCubit.getAllProducts();
+  }
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<ProductCubit, ProductState>(
+      bloc: productCubit,
       builder: (context, state) {
        if(state is ProductSuccess){
-         var data=BlocProvider.of<ProductCubit>(context).productDataList;
+         var data=productCubit.productDataList;
          return Padding(
            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
            child: Column(

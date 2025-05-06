@@ -4,6 +4,7 @@ import 'package:ecommerce_app/feature/product/data/data_source/product_data_sour
 import 'package:ecommerce_app/feature/product/domain/entity/add_to_cart_entity.dart';
 import 'package:ecommerce_app/feature/product/domain/entity/ProductsEntity.dart';
 import 'package:ecommerce_app/feature/product/domain/entity/delete_or_add_to_favourite_entity.dart';
+import 'package:ecommerce_app/feature/cart/domain/entity/get_cart_entity.dart';
 import 'package:ecommerce_app/feature/product/domain/entity/get_favourite_entity.dart';
 import 'package:ecommerce_app/feature/product/domain/repo/product_repo.dart';
 
@@ -40,4 +41,5 @@ class ProductRepoImpl implements ProductRepo {
   ) {
     return dataSource.deleteFromFavourite(productId);
   }
+
 }

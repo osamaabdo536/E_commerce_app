@@ -4,6 +4,7 @@ import 'package:ecommerce_app/feature/product/domain/entity/ProductsEntity.dart'
 import '../../../../core/failure/failures.dart';
 import '../../domain/entity/add_to_cart_entity.dart';
 import '../../domain/entity/delete_or_add_to_favourite_entity.dart';
+import '../../../cart/domain/entity/get_cart_entity.dart';
 import '../../domain/entity/get_favourite_entity.dart';
 
 abstract class ProductDataSource {
@@ -12,8 +13,6 @@ abstract class ProductDataSource {
   Future<Either<Failures,DeleteOrAddToFavouriteEntity>> addToFavourite(String productId);
   Future<Either<Failures,GetFavouriteEntity>> getFavourite();
   Future<Either<Failures, DeleteOrAddToFavouriteEntity>> deleteFromFavourite(String productId);
-
-
 }
 
 class ProductDataSourceImpl implements ProductDataSource {
@@ -84,4 +83,5 @@ class ProductDataSourceImpl implements ProductDataSource {
       },
     );
   }
+
 }

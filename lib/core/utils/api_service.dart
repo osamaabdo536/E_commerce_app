@@ -8,6 +8,7 @@ import 'package:ecommerce_app/feature/home/data/model/home_model.dart';
 import 'package:ecommerce_app/feature/product/data/model/AddToCartResponse.dart';
 import 'package:ecommerce_app/feature/product/data/model/ProductsModel.dart';
 import 'package:ecommerce_app/feature/product/data/model/delete_or_add_to_favourite_response.dart';
+import 'package:ecommerce_app/feature/cart/data/model/get_cart_response.dart';
 import 'package:ecommerce_app/feature/product/data/model/get_favourite_response.dart';
 import 'package:http/http.dart' as http;
 import '../../feature/auth/data/model/request/register_request.dart';
@@ -91,10 +92,26 @@ class ApiService {
     }
   }
 
+  Future<Either<Failures, GetCartResponse>> getCart() async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.cartApi);
+    var token = SharedPreferencesUtils.getData(key: "token");
+    var response = await http.get(url, headers: {"token": token.toString()});
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var getCartResponse = GetCartResponse.fromJson(json);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return Right(getCartResponse);
+    } else if (response.statusCode == 401) {
+      return Left(ServerError(errorMessage: getCartResponse.message!));
+    } else {
+      return Left(Failures(errorMessage: getCartResponse.message!));
+    }
+  }
+
   Future<Either<Failures, AddToCartResponse>> addToCart(
     String productId,
   ) async {
-    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToCartApi);
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.cartApi);
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.post(
       url,
@@ -127,7 +144,7 @@ class ApiService {
   }
 
   Future<Either<Failures, GetFavouriteResponse>> getFavourite() async {
-    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToFavouriteApi);
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.favouriteApi);
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.get(url, headers: {"token": token.toString()});
     var responseBody = response.body;
@@ -145,7 +162,7 @@ class ApiService {
   Future<Either<Failures, DeleteOrAddToFavouriteResponse>> addToFavourite(
     String productId,
   ) async {
-    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.addToFavouriteApi);
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.favouriteApi);
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.post(
       url,
@@ -169,7 +186,7 @@ class ApiService {
   ) async {
     Uri url = Uri.https(
       ApiConstants.baseUrl,
-      "${ApiConstants.addToFavouriteApi}productId",
+      "${ApiConstants.favouriteApi}/productId",
     );
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.delete(url, headers: {"token": token.toString()});

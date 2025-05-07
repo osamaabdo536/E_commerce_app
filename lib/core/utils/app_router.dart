@@ -2,11 +2,13 @@ import 'package:ecommerce_app/feature/auth/presentation/login/views/login_view.d
 import 'package:ecommerce_app/feature/auth/presentation/register/views/register_view.dart';
 import 'package:ecommerce_app/feature/home/presentation/view/home_view.dart';
 import 'package:ecommerce_app/feature/cart/presentation/view/cart_view.dart';
+import 'package:ecommerce_app/feature/product/presentation/screens/ProductDetails.dart';
 import 'package:ecommerce_app/feature/product/presentation/screens/favourite_view.dart';
 import 'package:ecommerce_app/feature/splash_screen/presentation/views/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/home/presentation/view/BottomNavigator.dart';
+import '../../feature/product/domain/entity/ProductsEntity.dart';
 
 abstract class AppRouter{
   static const splash = '/splashView';
@@ -15,6 +17,7 @@ abstract class AppRouter{
   static const homeView = '/homeView';
   static const favouriteView = '/favouriteView';
   static const cartView = '/cartView';
+  static const ProductDetailsView = '/ProductDetails';
 
   static final GoRouter router = GoRouter(
     routes:[
@@ -41,6 +44,13 @@ abstract class AppRouter{
       GoRoute(
           path: cartView,
           builder: (context, state) =>  const CartView()
+      ),
+      GoRoute(
+          path: ProductDetailsView,
+        builder: (context, state) {
+          final data = state.extra as DatumEntity;
+          return ProductDetails(data: data);
+        },
       ),
     ],
   );

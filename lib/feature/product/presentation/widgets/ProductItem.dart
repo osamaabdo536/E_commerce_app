@@ -1,6 +1,8 @@
+import 'package:ecommerce_app/feature/product/presentation/manger/product_cubit/product_cubit.dart';
 import 'package:ecommerce_app/feature/product/presentation/widgets/info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/di/Dependency_Injection.dart';
 import '../../../../core/utils/app_router.dart';
 import '../../../../core/utils/app_theme.dart';
 import '../../domain/entity/ProductsEntity.dart';
@@ -8,16 +10,29 @@ import '../screens/ProductDetails.dart';
 import 'custom_image.dart';
 import 'icon_custom.dart';
 
-class ProductItem extends StatelessWidget {
-  ProductItem({Key? key, required this.data}) : super(key: key);
-
+class ProductItem extends StatefulWidget {
+  ProductItem({Key? key, required this.data,required this.favouriteList}) : super(key: key);
   DatumEntity data;
+  List favouriteList;
 
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
+  late bool isFavorite;
+  ProductCubit productCubit = sl<ProductCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite = widget.favouriteList.contains(widget.data.id);
+  }
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(AppRouter.ProductDetailsView, extra: data);
+        context.push(AppRouter.ProductDetailsView, extra: widget.data);
       },
       child: Container(
         width: double.infinity,
@@ -40,17 +55,36 @@ class ProductItem extends StatelessWidget {
             Stack(
               children: [
                 CustomImage(
-                  data.imageCover!,
+                  widget.data.imageCover!,
                   width: MediaQuery.sizeOf(context).width * 300 / 360,
                   //height: 150,
                   radius: 15,
                 ),
-                Positioned(right: 3, top: 5, child: _buildFavorite()),
+                Positioned(
+                  right: 3,
+                  top: 5,
+                  child: InkWell(
+                    onTap: () async {
+                      setState(() {
+                        isFavorite = !isFavorite;
+                      });
+
+                      if (isFavorite) {
+                        await productCubit.addFavourite(widget.data.id!);
+                      } else {
+                        await productCubit.deleteFavourite(widget.data.id!);
+                      }
+
+                      productCubit.getFavourite(); // Optionally refresh global favorite list
+                    },
+                    child: _buildFavorite(),
+                  ),
+                ),
               ],
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: buildInfo(data: data),
+              child: buildInfo(data: widget.data),
             ),
           ],
         ),
@@ -60,8 +94,12 @@ class ProductItem extends StatelessWidget {
 
   Widget _buildFavorite() {
     return IconBox(
-      bgColor: MyTheme.primaryColor,
-      child: Icon(Icons.favorite_border, color: Colors.white, size: 20),
+      bgColor: MyTheme.white,
+      child: Icon(
+        isFavorite ? Icons.favorite_outlined : Icons.favorite_outline,
+        color: MyTheme.primaryColor,
+        size: 20,
+      ),
     );
   }
 }

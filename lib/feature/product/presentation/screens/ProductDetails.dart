@@ -141,6 +141,30 @@ class _ProductDetailsState extends State<ProductDetails> {
             SessionTile(title: 'Description', info: widget.data.description!,),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
             Row(
+              children: [
+                Text(
+                    "Quantity :  ",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: MyTheme.primaryColor,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+                Text(
+                    "${widget.data.quantity}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: MyTheme.primaryColor,
+
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ],
+            ),
+
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(

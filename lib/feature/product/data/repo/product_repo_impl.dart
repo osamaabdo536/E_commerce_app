@@ -31,7 +31,7 @@ class ProductRepoImpl implements ProductRepo {
   }
 
   @override
-  Future<Either<Failures, GetFavouriteEntity>> getFavourite() {
+  Future<Either<Failures, ProductsEntity>> getFavourite() {
     return dataSource.getFavourite();
   }
 

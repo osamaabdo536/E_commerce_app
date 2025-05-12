@@ -10,6 +10,6 @@ abstract class ProductRepo {
   Future<Either<Failures, AddToCartEntity>> addToCart(String productId);
   Future<Either<Failures, ProductsEntity>> getProducts();
   Future<Either<Failures, DeleteOrAddToFavouriteEntity>> addToFavourite(String productId);
-  Future<Either<Failures, GetFavouriteEntity>> getFavourite();
+  Future<Either<Failures, ProductsEntity>> getFavourite();
   Future<Either<Failures, DeleteOrAddToFavouriteEntity>> deleteFromFavourite(String productId);
 }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/feature/product/domain/entity/ProductsEntity.dart';
 import 'package:ecommerce_app/feature/product/domain/repo/product_repo.dart';
 
 import '../../../../core/failure/failures.dart';
@@ -8,7 +9,7 @@ class GetFavouriteUseCase {
   ProductRepo getFavouriteRepo;
   GetFavouriteUseCase({required this.getFavouriteRepo});
 
-  Future<Either<Failures, GetFavouriteEntity>> invoke() {
+  Future<Either<Failures, ProductsEntity>> invoke() {
     return getFavouriteRepo.getFavourite();
   }
 }

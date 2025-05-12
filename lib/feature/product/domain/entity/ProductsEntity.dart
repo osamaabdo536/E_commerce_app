@@ -1,11 +1,11 @@
 class ProductsEntity {
   int? results;
-  MetadataEntity? metadata;
+ // MetadataEntity? metadata;
   List<DatumEntity>? data;
 
   ProductsEntity({
     this.results,
-    this.metadata,
+   // this.metadata,
     this.data,
   });
 }

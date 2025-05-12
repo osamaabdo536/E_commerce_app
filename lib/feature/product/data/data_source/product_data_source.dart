@@ -11,7 +11,7 @@ abstract class ProductDataSource {
   Future<Either<Failures, AddToCartEntity>> addToCart(String productId);
   Future<Either<Failures, ProductsEntity>> getProducts();
   Future<Either<Failures,DeleteOrAddToFavouriteEntity>> addToFavourite(String productId);
-  Future<Either<Failures,GetFavouriteEntity>> getFavourite();
+  Future<Either<Failures,ProductsEntity>> getFavourite();
   Future<Either<Failures, DeleteOrAddToFavouriteEntity>> deleteFromFavourite(String productId);
 }
 
@@ -59,7 +59,7 @@ class ProductDataSourceImpl implements ProductDataSource {
   }
 
   @override
-  Future<Either<Failures, GetFavouriteEntity>> getFavourite() async {
+  Future<Either<Failures, ProductsEntity>> getFavourite() async {
     var either = await apiService.getFavourite();
     return either.fold(
           (failure) {

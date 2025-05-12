@@ -7,6 +7,6 @@ class ApiConstants{
   static const String cartApi =  "/api/v1/cart";
   static const String productsApi =  "/api/v1/products";
   static const String favouriteApi =  "/api/v1/wishlist";
-  static const String imageUrl = "$baseUrl/Route-Academy-products/";
+  static const String imageUrl = "https://$baseUrl/Route-Academy-products/";
 
 }

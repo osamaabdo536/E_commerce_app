@@ -25,7 +25,7 @@ final class AddToCartSuccess extends ProductState {
   AddToCartSuccess({required this.addToCartEntity});
 }
 final class GetFavouriteSuccess extends ProductState {
-  final GetFavouriteEntity getFavouriteEntity;
+  final ProductsEntity getFavouriteEntity;
 
   GetFavouriteSuccess({required this.getFavouriteEntity});
 }

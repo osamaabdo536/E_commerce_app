@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ecommerce_app/feature/product/domain/entity/ProductsEntity.dart';
 import 'package:ecommerce_app/feature/product/domain/entity/add_to_cart_entity.dart';
 import 'package:ecommerce_app/feature/product/domain/entity/get_favourite_entity.dart';
 import 'package:ecommerce_app/feature/product/domain/use_case/GetProducts.dart';
@@ -21,6 +22,7 @@ class ProductCubit extends Cubit<ProductState> {
   GetFavouriteUseCase getFavouriteUseCase;
   DeleteFromFavouriteUseCase deleteFromFavouriteUseCase;
   List productDataList = [];
+  List FavouriteDataList = [];
   int numberOfCartItem = 0;
   ProductCubit({
     required this.getProductsUseCase,
@@ -31,6 +33,7 @@ class ProductCubit extends Cubit<ProductState> {
   }) : super(ProductInitial());
 static ProductCubit get(context)=>BlocProvider.of<ProductCubit>(context);
   Future<void> getAllProducts() async {
+    await getFavourite();
     emit(ProductLoading());
     EasyLoading.show(status: 'loading...');
     var either = await getProductsUseCase.invoke();
@@ -71,6 +74,7 @@ static ProductCubit get(context)=>BlocProvider.of<ProductCubit>(context);
         emit(ProductError(errorMsg: failure.errorMessage!));
       },
           (response) {
+            FavouriteDataList=response.data!.map((x)=>x.id).toList();
         emit(GetFavouriteSuccess(getFavouriteEntity: response));
       },
     );

@@ -1,12 +1,15 @@
+import 'package:ecommerce_app/feature/product/presentation/manger/product_cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/di/Dependency_Injection.dart';
 import '../../../../core/utils/app_theme.dart';
 import '../../domain/entity/ProductsEntity.dart';
 
 
 class buildInfo extends StatelessWidget {
    buildInfo({super.key,required this.data});
-var data;
+   DatumEntity data;
+ProductCubit productCubit=sl<ProductCubit>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,11 +65,16 @@ var data;
                 Icon(Icons.star,color: Colors.yellow,)
               ],
             ),
-            CircleAvatar(
-              minRadius: 15,
-              maxRadius: 15,
-              backgroundColor: MyTheme.primaryColor,
-              child: Icon(Icons.add,color: Colors.white,size: 20,),
+            InkWell(
+              onTap: (){
+                productCubit.addToCart(data.id!);
+              },
+              child: CircleAvatar(
+                minRadius: 15,
+                maxRadius: 15,
+                backgroundColor: MyTheme.primaryColor,
+                child: Icon(Icons.add,color: Colors.white,size: 20,),
+              ),
             )
           ],
         ),

@@ -14,12 +14,11 @@ class FavouriteViewBody extends StatefulWidget {
 }
 
 class _FavouriteViewBodyState extends State<FavouriteViewBody> {
-  late ProductCubit productCubit;
+  ProductCubit productCubit=sl<ProductCubit>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    productCubit=sl<ProductCubit>();
     productCubit.getFavourite();
     //ProductCubit.get(context).getFavourite();
   }

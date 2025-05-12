@@ -139,17 +139,17 @@ class ApiService {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return Right(productsResponse);
     } else {
-      return Left(Failures(errorMessage: "Check your Internet"));
+      return Left(Failures(errorMessage: productsResponse.message));
     }
   }
 
-  Future<Either<Failures, GetFavouriteResponse>> getFavourite() async {
+  Future<Either<Failures, ProductsModel>> getFavourite() async {
     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.favouriteApi);
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.get(url, headers: {"token": token.toString()});
     var responseBody = response.body;
     var json = jsonDecode(responseBody);
-    var getFavouriteResponse = GetFavouriteResponse.fromJson(json);
+    var getFavouriteResponse = ProductsModel.fromJson(json);
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return Right(getFavouriteResponse);
     } else if (response.statusCode == 401) {
@@ -186,7 +186,7 @@ class ApiService {
   ) async {
     Uri url = Uri.https(
       ApiConstants.baseUrl,
-      "${ApiConstants.favouriteApi}/productId",
+      "${ApiConstants.favouriteApi}/$productId",
     );
     var token = SharedPreferencesUtils.getData(key: "token");
     var response = await http.delete(url, headers: {"token": token.toString()});

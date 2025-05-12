@@ -3,11 +3,11 @@
 import 'package:ecommerce_app/feature/product/domain/entity/ProductsEntity.dart';
 
 class ProductsModel extends ProductsEntity {
-  ProductsModel({required super.results, required super.metadata, required super.data});
-
+  ProductsModel({required super.results, required super.data,this.message});
+  String ? message;
   factory ProductsModel.fromJson(Map<String, dynamic> json) => ProductsModel(
     results: json["results"],
-    metadata: Metadata.fromJson(json["metadata"]),
+   // metadata: Metadata.fromJson(json["metadata"]),
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
   );
 
